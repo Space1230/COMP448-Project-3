@@ -29,8 +29,18 @@ iv = bytes(iv_str, 'ascii')
 
 for word in file:
     key = bytes(pad_str(word), 'ascii')
-    print(key)
+
     decryptor = Cipher(
         algorithms.AES128(key),
         modes.CBC(iv)
     ).decryptor()
+
+    plaintext_bytes:bytes = decryptor.update(encrypted_data) + decryptor.finalize()
+
+    try:
+        plaintext = plaintext_bytes.decode('ascii').strip()
+        if 'the' in plaintext:
+            print(plaintext)
+            print("key:", key)
+    except ValueError:
+        continue
