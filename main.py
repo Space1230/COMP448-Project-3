@@ -2,9 +2,12 @@
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
-group_number = 15
-encrypted_file = "input-files/encrypted" + str(group_number) + ".txt"
+encrypted_file = "input-files/encrypted15.txt"
 word_file = "input-files/wordsEn.txt"
+
+encrypted_file = open(encrypted_file, 'rb')
+encrypted_data = encrypted_file.read()
+
 
 def pad_str(input):
     length = len(input)
@@ -28,4 +31,4 @@ for word in file:
     decryptor = Cipher(
         algorithms.AES128(key),
         modes.CBC(iv)
-    )
+    ).decryptor()
